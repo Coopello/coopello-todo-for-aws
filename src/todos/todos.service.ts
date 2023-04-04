@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Todo } from './interfaces/toods.interface';
+import { Todo } from './interfaces/todos.interface';
 
 @Injectable()
 export class TodosService {
@@ -23,6 +23,19 @@ export class TodosService {
       title: todo.title,
     };
     this.todos = [...this.todos, newTodo].sort((a, b) => a.id - b.id);
+
+    return newTodo;
+  }
+
+  update(id: number, todo: Pick<Todo, 'title' | 'isDone'>) {
+    const newTodo = {
+      id,
+      ...todo,
+    };
+
+    this.todos = [...this.todos.filter((todo) => todo.id !== id), newTodo].sort(
+      (a, b) => a.id - b.id,
+    );
 
     return newTodo;
   }
