@@ -39,4 +39,15 @@ export class TodosService {
 
     return newTodo;
   }
+
+  delete(id: number) {
+    const currentTodosCount = this.todos.length;
+    this.todos = this.todos.filter((todo) => todo.id !== id);
+
+    const isExistingTodo = currentTodosCount !== this.todos.length;
+
+    return isExistingTodo
+      ? `idが${id}のtodoを削除しました。`
+      : '指定されたtodoは存在しませんでした。';
+  }
 }
