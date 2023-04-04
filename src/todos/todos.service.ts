@@ -1,16 +1,29 @@
 import { Injectable } from '@nestjs/common';
-
-const TODOS = [
-  {
-    id: 1,
-    isDone: false,
-    title: 'Todo 1',
-  },
-];
+import { Todo } from './interfaces/toods.interface';
 
 @Injectable()
 export class TodosService {
+  private todos: Todo[] = [
+    {
+      id: 1,
+      isDone: false,
+      title: 'Todo 1',
+    },
+  ];
+
   finAll() {
-    return TODOS;
+    return this.todos;
+  }
+
+  create(todo: Pick<Todo, 'title'>) {
+    const maxId = this.todos.at(-1).id;
+    const newTodo = {
+      id: maxId + 1,
+      isDone: false,
+      title: todo.title,
+    };
+    this.todos = [...this.todos, newTodo].sort((a, b) => a.id - b.id);
+
+    return newTodo;
   }
 }
