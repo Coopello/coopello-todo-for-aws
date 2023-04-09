@@ -1,53 +1,49 @@
 import { Injectable } from '@nestjs/common';
 import { Todo } from './interfaces/todos.interface';
+import { prisma } from 'src/libs/prisma';
 
 @Injectable()
 export class TodosService {
-  private todos: Todo[] = [
-    {
-      id: 1,
-      isDone: false,
-      title: 'Todo 1',
-    },
-  ];
-
-  finAll() {
-    return this.todos;
+  async finAll() {
+    return await prisma.todo.findMany();
   }
 
-  create(todo: Pick<Todo, 'title'>) {
-    const maxId = this.todos.at(-1).id;
-    const newTodo = {
-      id: maxId + 1,
-      isDone: false,
-      title: todo.title,
-    };
-    this.todos = [...this.todos, newTodo].sort((a, b) => a.id - b.id);
+  async create(todo: Pick<Todo, 'title'>) {
+    const newTodo = await prisma.todo.create({
+      data: todo,
+    });
 
     return newTodo;
   }
 
-  update(id: number, todo: Pick<Todo, 'title' | 'isDone'>) {
-    const newTodo = {
-      id,
-      ...todo,
-    };
+  async update(id: number, todo: Pick<Todo, 'title' | 'isDone'>) {
+    const updatedTodo = await prisma.todo.update({
+      where: {
+        id,
+      },
+      data: todo,
+    });
 
-    this.todos = [...this.todos.filter((todo) => todo.id !== id), newTodo].sort(
-      (a, b) => a.id - b.id,
-    );
-
-    return newTodo;
+    return updatedTodo;
   }
 
-  delete(id: number) {
-    const currentTodosCount = this.todos.length;
-    this.todos = this.todos.filter((todo) => todo.id !== id);
+  async delete(id: number) {
+    const targetTodoCount = await prisma.todo.count({
+      where: {
+        id,
+      },
+    });
 
-    const isExistingTodo = currentTodosCount !== this.todos.length;
+    if (targetTodoCount === 0) {
+      return '指定されたtodoは存在しませんでした。';
+    }
 
-    return isExistingTodo
-      ? `idが${id}のtodoを削除しました。`
-      : '指定されたtodoは存在しませんでした。';
+    await prisma.todo.delete({
+      where: {
+        id,
+      },
+    });
+
+    return `idが${id}のtodoを削除しました。`;
   }
 }
