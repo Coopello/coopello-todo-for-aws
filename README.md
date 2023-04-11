@@ -7,12 +7,11 @@ $ yarn install
 ## 立ち上げ
 
 ```bash
-# development
-# バックエンドは http://localhost:8000
+# APIエンドポイントは http://localhost:8000, Swaggerは http://localhost:8000/api
 $ yarn dev
 ```
 
-↓最初にデータベースを作成する必要がある
+↓ 最初にデータベースを作成する必要がある
 
 ```bash
 # １回目のみ以下２つのコマンド実行
