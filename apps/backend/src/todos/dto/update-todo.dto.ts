@@ -2,12 +2,12 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateTodoDto {
   @ApiProperty({
-    default: false,
+    example: false,
   })
   isDone: boolean;
 
   @ApiProperty({
-    default: 'Todo edited',
+    example: 'Todo edited',
   })
   title: string;
 }
