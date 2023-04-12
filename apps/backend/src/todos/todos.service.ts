@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Todo } from './interfaces/todos.interface';
 import { prisma } from 'src/libs/prisma';
 
@@ -17,6 +17,19 @@ export class TodosService {
   }
 
   async update(id: number, todo: Pick<Todo, 'title' | 'isDone'>) {
+    const targetTodoCount = await prisma.todo.count({
+      where: {
+        id,
+      },
+    });
+
+    if (targetTodoCount === 0) {
+      throw new HttpException(
+        '指定されたtodoは存在しませんでした。',
+        HttpStatus.NO_CONTENT,
+      );
+    }
+
     const updatedTodo = await prisma.todo.update({
       where: {
         id,
@@ -35,7 +48,10 @@ export class TodosService {
     });
 
     if (targetTodoCount === 0) {
-      return '指定されたtodoは存在しませんでした。';
+      throw new HttpException(
+        '指定されたtodoは存在しませんでした。',
+        HttpStatus.NO_CONTENT,
+      );
     }
 
     await prisma.todo.delete({
