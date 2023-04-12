@@ -26,7 +26,7 @@ export class TodosService {
     if (targetTodoCount === 0) {
       throw new HttpException(
         '指定されたtodoは存在しませんでした。',
-        HttpStatus.NO_CONTENT,
+        HttpStatus.NOT_FOUND,
       );
     }
 
@@ -50,7 +50,7 @@ export class TodosService {
     if (targetTodoCount === 0) {
       throw new HttpException(
         '指定されたtodoは存在しませんでした。',
-        HttpStatus.NO_CONTENT,
+        HttpStatus.NOT_FOUND,
       );
     }
 

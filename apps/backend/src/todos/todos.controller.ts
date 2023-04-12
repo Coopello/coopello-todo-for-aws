@@ -16,22 +16,38 @@ export class TodosController {
   constructor(private readonly todosService: TodosService) {}
 
   @Get()
-  findAll() {
-    return this.todosService.finAll();
+  async findAll() {
+    try {
+      return await this.todosService.finAll();
+    } catch (e) {
+      return e;
+    }
   }
 
   @Post()
-  create(@Body() createTodoDto: CreateTodoDto) {
-    return this.todosService.create(createTodoDto);
+  async create(@Body() createTodoDto: CreateTodoDto) {
+    try {
+      return await this.todosService.create(createTodoDto);
+    } catch (e) {
+      return e;
+    }
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateTodoDto: UpdateTodoDto) {
-    return this.todosService.update(Number(id), updateTodoDto);
+  async update(@Param('id') id: string, @Body() updateTodoDto: UpdateTodoDto) {
+    try {
+      return await this.todosService.update(Number(id), updateTodoDto);
+    } catch (e) {
+      return e;
+    }
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string) {
-    return this.todosService.delete(Number(id));
+  async delete(@Param('id') id: string) {
+    try {
+      return await this.todosService.delete(Number(id));
+    } catch (e) {
+      return e;
+    }
   }
 }
