@@ -1,4 +1,4 @@
-# 立ち上げ
+## 立ち上げ
 
 ```bash
 # http://localhost:3000
