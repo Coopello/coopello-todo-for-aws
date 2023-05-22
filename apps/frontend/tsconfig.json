@@ -17,6 +17,9 @@
     "plugins": [
       {
         "name": "next"
+      },
+      {
+        "name": "eslint-plugin-import-access"
       }
     ],
     "paths": {
