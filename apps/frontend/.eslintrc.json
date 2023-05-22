@@ -1,6 +1,11 @@
 {
   "extends": "next/core-web-vitals",
-  "plugins": ["import-access", "simple-import-sort", "sort-destructure-keys"],
+  "plugins": [
+    "import-access",
+    "simple-import-sort",
+    "sort-destructure-keys",
+    "unused-imports"
+  ],
   "rules": {
     "import-access/jsdoc": ["error"],
     "simple-import-sort/imports": "error",
@@ -8,6 +13,17 @@
     "sort-destructure-keys/sort-destructure-keys": [
       2,
       { "caseSensitive": false }
+    ],
+    "@typescript-eslint/no-unused-vars": "off",
+    "unused-imports/no-unused-imports": "error",
+    "unused-imports/no-unused-vars": [
+      "warn",
+      {
+        "vars": "all",
+        "varsIgnorePattern": "^_",
+        "args": "after-used",
+        "argsIgnorePattern": "^_"
+      }
     ]
   }
 }

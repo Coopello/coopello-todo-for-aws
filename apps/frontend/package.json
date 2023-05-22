@@ -22,6 +22,7 @@
   "devDependencies": {
     "eslint-plugin-import-access": "^1.0.2",
     "eslint-plugin-simple-import-sort": "^10.0.0",
-    "eslint-plugin-sort-destructure-keys": "^1.5.0"
+    "eslint-plugin-sort-destructure-keys": "^1.5.0",
+    "eslint-plugin-unused-imports": "^2.0.0"
   }
 }
